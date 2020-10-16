@@ -10,6 +10,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     auth_token = f'Bearer {LIFX_TOKEN}'
-    requests.post('https://api.lifx.com/v1/lights/all/toggle', headers= { 'Authorization': auth_token})
+    response = requests.post('https://api.lifx.com/v1/lights/all/effects/move', data={'period': '10', 'cycles': '1', 'direction': 'backward'}, headers= { 'Authorization': auth_token})
 
-    return func.HttpResponse(f"Lights toggled")
+    return func.HttpResponse(response.text)
